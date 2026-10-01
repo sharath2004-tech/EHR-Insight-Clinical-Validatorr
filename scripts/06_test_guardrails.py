@@ -4,7 +4,7 @@ from nemoguardrails import RailsConfig, LLMRails
 from dotenv import load_dotenv
 
 async def test_guardrails():
-    load_dotenv()
+    load_dotenv(override=True)
     
     print("⏳ Initializing NeMo Guardrails Firewall...")
     # Point the config loader to our guardrails directory

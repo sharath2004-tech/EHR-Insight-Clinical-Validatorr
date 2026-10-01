@@ -73,7 +73,6 @@ python src/pii_redaction/presidio_service.py
 
 uvicorn src.api.main:app --reload
 
-streamlit run src/ui/app.py
 
 Questions to ask :
 ```

@@ -18,3 +18,4 @@ python-dotenv==1.2.3
 requests==2.34.2
 pandas==3.0.5
 numpy==2.4.6
+openai==1.59.5

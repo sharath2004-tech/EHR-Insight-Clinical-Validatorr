@@ -13,7 +13,7 @@ from sentence_transformers import SentenceTransformer
 
 from src.pii_redaction.presidio_service import ClinicalPIIRedactor
 
-load_dotenv()
+load_dotenv(override=True)
 
 app = FastAPI(title="Zero-Trust Clinical RAG API")
 
@@ -24,10 +24,13 @@ middleware = {}
 async def startup_event():
     print("⏳ Booting Enterprise AI Middlewares...")
     
+    # Set OPENAI_API_KEY for NeMo Guardrails
+    os.environ["OPENAI_API_KEY"] = os.getenv("GROQ_API_KEY")
+    
     # 1. Load Presidio (spaCy)
     middleware["redactor"] = ClinicalPIIRedactor()
     
-    # 2. Load NeMo Guardrails (ModernBERT + DeepSeek)
+    # 2. Load NeMo Guardrails (ModernBERT + Groq)
     config = RailsConfig.from_path("./src/guardrails")
     middleware["rails"] = LLMRails(config)
     

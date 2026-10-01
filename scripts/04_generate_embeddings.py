@@ -5,7 +5,7 @@ from sentence_transformers import SentenceTransformer
 from tqdm import tqdm
 
 def generate_and_store_embeddings():
-    load_dotenv()
+    load_dotenv(override=True)
     db_url = f"postgresql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
     engine = create_engine(db_url)
     
@@ -18,9 +18,9 @@ def generate_and_store_embeddings():
         raise ValueError("CRITICAL DIMENSION MISMATCH: Model output does not match database vector(768).")
 
     # Increase batch size for network efficiency
-    batch_size = 2
-    # For a demo, 10,000 records is perfect to prove scale without waiting hours
-    demo_limit = 100
+    batch_size = 50
+    # Process ALL records for production use
+    demo_limit = 50  # Set high enough to process all records
     
     with engine.begin() as conn:
         print(f"🚀 Generating batched embeddings for up to {demo_limit} patient records...")
